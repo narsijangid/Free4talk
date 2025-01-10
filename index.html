@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple AI Chatbot with Voice</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+        }
+
+        .chat-container {
+            width: 100%;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        .chat-box {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 10px;
+        }
+
+        .chat-content {
+            display: flex;
+            flex-direction: column-reverse;
+        }
+
+        .user-chat-box, .ai-chat-box {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .user-chat-area, .ai-chat-area {
+            background-color: #e1e1e1;
+            padding: 10px;
+            border-radius: 5px;
+            max-width: 80%;
+        }
+
+        .user-chat-area {
+            background-color: #c2f0c2;
+        }
+
+        .ai-chat-area {
+            background-color: #f0f0f0;
+        }
+
+        .input-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        #prompt {
+            width: 70%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px 15px;
+            border: none;
+            background-color: #3498db;
+            color: white;
+            font-size: 14px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-box">
+            <div class="chat-content">
+                <!-- User and AI messages will be displayed here -->
+            </div>
+        </div>
+        <div class="input-container">
+            <input type="text" id="prompt" placeholder="Type a message...">
+            <button id="submit">Send</button>
+        </div>
+    </div>
+
+    <script>
+        let prompt = document.querySelector("#prompt");
+        let submitbtn = document.querySelector("#submit");
+        let chatContent = document.querySelector(".chat-content");
+
+        const Api_Url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyDhDhiKFkaYAp-o0lGL4e4uJSYIJSh6paY"; // Replace with your API URL
+
+        let user = {
+            message: null
+        };
+
+        async function generateResponse(aiChatBox) {
+            let text = aiChatBox.querySelector(".ai-chat-area");
+            let RequestOption = {
+                method: "POST",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    "contents": [
+                        { "parts": [{ text: user.message }] }
+                    ]
+                })
+            };
+            try {
+                let response = await fetch(Api_Url, RequestOption);
+                let data = await response.json();
+                let apiResponse = data.candidates[0].content.parts[0].text.trim();
+                text.innerHTML = apiResponse;
+                voiceControl(apiResponse); // Call voice function
+            } catch (error) {
+                console.log(error);
+                text.innerHTML = "Sorry, something went wrong.";
+                voiceControl("Sorry, something went wrong.");
+            } finally {
+                chatContent.scrollTo({ top: chatContent.scrollHeight, behavior: "smooth" });
+            }
+        }
+
+        function createChatBox(html, classes) {
+            let div = document.createElement("div");
+            div.innerHTML = html;
+            div.classList.add(classes);
+            return div;
+        }
+
+        function handlechatResponse(userMessage) {
+            user.message = userMessage;
+            let html = `<div class="user-chat-area">${user.message}</div>`;
+            prompt.value = "";
+            let userChatBox = createChatBox(html, "user-chat-box");
+            chatContent.appendChild(userChatBox);
+
+            chatContent.scrollTo({ top: chatContent.scrollHeight, behavior: "smooth" });
+
+            setTimeout(() => {
+                let html = `<div class="ai-chat-area">
+                <img src="loading.webp" alt="Loading" class="load" width="50px">
+                </div>`;
+                let aiChatBox = createChatBox(html, "ai-chat-box");
+                chatContent.appendChild(aiChatBox);
+                generateResponse(aiChatBox);
+            }, 600);
+        }
+
+        // Voice function to speak the chatbot's response
+        function voiceControl(responseText) {
+    const synth = window.speechSynthesis;
+    const maxChunkLength = 200;
+    const chunks = splitTextIntoChunks(responseText, maxChunkLength);
+
+    let currentChunkIndex = 0;
+    let voices = [];
+
+    // Load voices and find specific female voices
+    function loadVoices() {
+        voices = synth.getVoices();
+
+        // Manually set known female voices for Hindi and English
+        const femaleHindiVoice = voices.find(voice => voice.name === "Google हिन्दी" || voice.name.toLowerCase().includes("female"));
+        const femaleEnglishVoice = voices.find(voice => voice.name === "Google US English" || voice.name.toLowerCase().includes("female"));
+
+        function speakNextChunk() {
+            if (currentChunkIndex < chunks.length) {
+                let utterance = new SpeechSynthesisUtterance(chunks[currentChunkIndex]);
+
+                if (/[\u0900-\u097F]/.test(chunks[currentChunkIndex])) {
+                    utterance.lang = "hi-IN";
+                    utterance.voice = femaleHindiVoice || voices[0]; // Use female Hindi voice or fallback
+                } else {
+                    utterance.lang = "en-US";
+                    utterance.voice = femaleEnglishVoice || voices[0]; // Use female English voice or fallback
+                }
+
+                utterance.volume = 1;
+                utterance.rate = 1;
+                utterance.pitch = 1;
+
+                utterance.onend = () => {
+                    currentChunkIndex++;
+                    speakNextChunk();
+                };
+
+                synth.speak(utterance);
+            }
+        }
+
+        speakNextChunk();
+    }
+
+    // Load voices (some browsers require onvoiceschanged event)
+    if (synth.getVoices().length) {
+        loadVoices();
+    } else {
+        synth.onvoiceschanged = loadVoices;
+    }
+}
+
+
+
+function splitTextIntoChunks(text, maxLength) {
+    const regex = new RegExp(`.{1,${maxLength}}(\\s|$)`, 'g');
+    return text.match(regex) || [text]; // Split by maxLength preserving word boundaries
+}
+
+
+        prompt.addEventListener("keydown", (e) => {
+            if (e.key == "Enter") {
+                handlechatResponse(prompt.value);
+            }
+        });
+
+        submitbtn.addEventListener("click", () => {
+            handlechatResponse(prompt.value);
+        });
+    </script>
+</body>
+</html>
