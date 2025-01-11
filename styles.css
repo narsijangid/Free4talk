@@ -58,13 +58,6 @@ body {
     margin-top: 20px;
 }
 
-#prompt {
-    width: 70%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}
-
 button {
     padding: 10px 15px;
     border: none;
@@ -79,12 +72,13 @@ button:hover {
     background-color: #2980b9;
 }
 
-
+.avatar img {
+    box-shadow: rgba(0, 225, 255, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+}
 
 @media only screen and (min-width: 600px) {
-    .avatar img{
-   height: 410px;
- 
-   box-shadow: rgba(0, 225, 255, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
-}
+    .avatar img {
+        height: 410px;
+        box-shadow: rgba(0, 225, 255, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+    }
 }
