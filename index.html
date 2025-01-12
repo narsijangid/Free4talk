@@ -4,30 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simple AI Chatbot with Voice</title>
-   <link rel="stylesheet" href="styles.css">
-   
+    <link rel="stylesheet" href="styles.css">
+
 </head>
 <body>
-
+    
     <div class="chat-container">
-        <div class="chat-box">
+    <div class="chat-box">
             <div class="chat-content">
-                <!-- User and AI messages will be hidden -->
+             
             </div>
         </div>
-
+        <h3 style="color: rgb(0, 234, 255); display: flex; justify-content: center;">Press Space key to speak</h3>
         <div class="avatar">
             <img id="avatar-img" src="/WhatsAppVideo2025-01-10at9.29.03PM-ezgif.com-video-to-gif-converter.gif" alt="AI Avatar">
         </div>
-
-        <!-- <div class="chat-box">
-            <div style="color: white;" class="chat-content" id="response-container">
-                <!-- AI response will appear here -->
+      
+        <div class="chat-box">
+            <div style="color: rgb(0, 222, 242);" class="chat-content" id="response-container">
+          
             </div>
-        </div> -->
-    </div>
+        </div>
 
-    <script src="/script.js"></script>
-  
+        <div class="input-container">
+            <input type="text" id="prompt" placeholder="Type a message...">
+            <button style="background-color: blue;" id="submit">Send</button>
+            <button id="voice-input"><svg style="height: 30px; width:30px; " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path fill="#00ffee" d="M192 0C139 0 96 43 96 96l0 160c0 53 43 96 96 96s96-43 96-96l0-160c0-53-43-96-96-96zM64 216c0-13.3-10.7-24-24-24s-24 10.7-24 24l0 40c0 89.1 66.2 162.7 152 174.4l0 33.6-48 0c-13.3 0-24 10.7-24 24s10.7 24 24 24l72 0 72 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-48 0 0-33.6c85.8-11.7 152-85.3 152-174.4l0-40c0-13.3-10.7-24-24-24s-24 10.7-24 24l0 40c0 70.7-57.3 128-128 128s-128-57.3-128-128l0-40z"/></svg></button>
+        </div>
+    </div>
+    
+ 
+<script src="/script.js"></script>
+<script src="/spacekey.js"></script>
+
 </body>
 </html>

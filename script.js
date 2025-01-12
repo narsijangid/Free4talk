@@ -1,3 +1,6 @@
+let prompt = document.querySelector("#prompt");
+let submitbtn = document.querySelector("#submit");
+let voiceInputBtn = document.querySelector("#voice-input");
 let avatarImg = document.querySelector("#avatar-img");
 
 const Api_Url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyDhDhiKFkaYAp-o0lGL4e4uJSYIJSh6paY"; // Replace with your API URL
@@ -8,32 +11,18 @@ let user = {
 
 let synth = window.speechSynthesis;
 let currentUtterance = null;
+let recognition = null;
+if (window.SpeechRecognition || window.webkitSpeechRecognition) {
+    recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+    recognition.lang = 'en-US';
+    recognition.continuous = false;
+    recognition.interimResults = false;
 
-// Voice recognition setup
-const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-recognition.lang = "en-US";
-recognition.interimResults = true;
-recognition.continuous = true;
-
-recognition.onstart = function() {
-    console.log("Voice recognition activated. Start speaking...");
-};
-
-recognition.onerror = function(event) {
-    console.log("Error occurred in recognition: " + event.error);
-};
-
-recognition.onresult = function(event) {
-    let transcript = "";
-    for (let i = event.resultIndex; i < event.results.length; i++) {
-        transcript += event.results[i][0].transcript;
-    }
-    if (event.results[0].isFinal) {
+    recognition.onresult = (event) => {
+        let transcript = event.results[0][0].transcript;
         handlechatResponse(transcript);
-    }
-};
-
-recognition.start(); // Start listening as soon as the website loads
+    };
+}
 
 async function generateResponse() {
     let RequestOption = {
@@ -59,6 +48,7 @@ async function generateResponse() {
 
 function handlechatResponse(userMessage) {
     user.message = userMessage;
+    prompt.value = "";
 
     // Stop any ongoing speech and reset avatar image
     if (currentUtterance && synth.speaking) {
@@ -74,11 +64,19 @@ function handlechatResponse(userMessage) {
     generateResponse();
 }
 
+
 function filterAsteriskWords(text) {
-    return text.split(" ").filter(word => !word.includes("*")).join(" ");
+    return text.split(" ").map(word => word.includes("*") ? "ध्यान से सुन" : word).join(" ");
+}
+function filterAsteriskWords(text) {
+    return text.split(" ").map(word => word.includes("sex") ? "मादरचोद इंग्लिश सीखने आया है या बकचोदी करने आया है तू। सुधर जाओ एस्मे ही भलाई है । साले Motherfucker" : word).join(" ");
 }
 
-// Voice function to speak the chatbot's response
+function filterAsteriskWords(text) {
+    return text.split(" ").map(word => word.includes("Google") ? "Free4talk Company" : word).join(" ");
+}
+
+
 function voiceControl(responseText) {
     responseText = filterAsteriskWords(responseText); // Filter out words with *
 
@@ -94,7 +92,7 @@ function voiceControl(responseText) {
 
     function loadVoices() {
         voices = synth.getVoices();
-        const femaleHindiVoice = voices.find(voice => voice.name === "Google हिन्दी" || voice.name.toLowerCase().includes("female"));
+        const femaleHindiVoice = voices.find(voice => voice.name === "Google हिंदी" || voice.name.toLowerCase().includes("female"));
         const femaleEnglishVoice = voices.find(voice => voice.name === "Google US English" || voice.name.toLowerCase().includes("female"));
 
         function speakNextChunk() {
@@ -131,3 +129,63 @@ function splitTextIntoChunks(text, maxLength) {
     const regex = new RegExp(`.{1,${maxLength}}(\s|$)`, 'g');
     return text.match(regex) || [text];
 }
+
+prompt.addEventListener("keydown", (e) => {
+    if (e.key == "Enter") {
+        handlechatResponse(prompt.value);
+    }
+});
+
+submitbtn.addEventListener("click", () => {
+    handlechatResponse(prompt.value);
+});
+
+voiceInputBtn.addEventListener("mousedown", () => {
+    if (recognition) {
+        recognition.start();
+    }
+});
+
+voiceInputBtn.addEventListener("mouseup", () => {
+    if (recognition) {
+        recognition.stop();
+    }
+});
+
+voiceBtn.addEventListener("mouseup", () => {
+    if (recognition && isRecording) {
+        recognition.stop();
+    }
+});
+
+// Spacebar for voice input (PC)
+document.addEventListener("keydown", (e) => {
+    if (e.code === "Space" && !isRecording) {
+        e.preventDefault();
+        if (recognition) {
+            isRecording = true;
+            recognition.start();
+        }
+    }
+});
+
+document.addEventListener("keyup", (e) => {
+    if (e.code === "Space" && isRecording) {
+        e.preventDefault();
+        if (recognition) {
+            recognition.stop();
+        }
+    }
+});
+
+// Send button click
+submitBtn.addEventListener("click", () => {
+    handleChatResponse(prompt.value);
+});
+
+// Enter key to send message
+prompt.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+        handleChatResponse(prompt.value);
+    }
+});
