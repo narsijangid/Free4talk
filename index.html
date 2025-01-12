@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simple AI Chatbot with Voice</title>
-    <link rel="stylesheet" href="styles.css">
+
     <style>
         * {
             margin: 0;
@@ -27,18 +27,21 @@
             box-shadow: 0 0 15px rgba(255, 0, 0, 0.1);
             display: flex;
             flex-direction: column;
-            height: 100vh;
+            height: 100%;
         }
 
         .chat-box {
             flex-grow: 1;
             overflow-y: auto;
             padding: 10px;
+            margin-top: 0%;
+          margin-top: 30px;
         }
 
         .chat-content {
             display: flex;
             flex-direction: column-reverse;
+       
         }
 
         .user-chat-box, .ai-chat-box {
@@ -49,7 +52,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100%;
+            height: 50%;
         }
 
         .avatar img {
@@ -90,28 +93,93 @@
             box-shadow: rgba(0, 225, 255, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
         }
 
+        #voice-input{
+            background-color: rgb(7, 7, 7);
+border-radius: 10px;
+box-shadow: rgba(255, 230, 0, 0.961) 0px 2px 5px -1px, rgb(255, 251, 0) 0px 1px 3px -1px;
+
+        }
+
+        #prompt {
+    width: 70%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    white-space: pre-wrap; /* This ensures spaces are displayed correctly */
+    word-wrap: break-word; /* Ensures long words break appropriately */
+}
+
+
         @media only screen and (min-width: 600px) {
             .avatar img {
                 height: 410px;
                 box-shadow: rgba(0, 225, 255, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
             }
+            #submit{
+background-color: rgb(7, 7, 7);
+border-radius: 10px;
+box-shadow: rgba(255, 230, 0, 0.961) 0px 2px 5px -1px, rgb(255, 251, 0) 0px 1px 3px -1px;
+margin-top: 80px;
         }
         #voice-input{
-            background-color: blue;
+            background-color: rgb(7, 7, 7);
+border-radius: 10px;
+box-shadow: rgba(255, 230, 0, 0.961) 0px 2px 5px -1px, rgb(255, 251, 0) 0px 1px 3px -1px;
+margin-top: 80px;
         }
+
+        #prompt{
+            height: 39px;
+            color: rgb(0, 0, 0);
+            border: none;
+            width: 630px;
+           margin-top: 80px;
+          
+        }
+          
+        }
+
+
+        
+
+@media only screen and (max-width:600px) {
+   
+        #submit{
+background-color: rgb(7, 7, 7);
+border-radius: 10px;
+box-shadow: rgba(255, 230, 0, 0.961) 0px 2px 5px -1px, rgb(255, 251, 0) 0px 1px 3px -1px;
+margin: 8px;
+        }
+        #voice-input{
+            background-color: rgb(7, 7, 7);
+border-radius: 10px;
+box-shadow: rgba(255, 230, 0, 0.961) 0px 2px 5px -1px, rgb(255, 251, 0) 0px 1px 3px -1px;
+
+        }
+
+        #prompt{
+            height: 37px;
+            color: rgb(0, 0, 0);
+            border: none;
+          
+        }
+      
+
+        .chat-box{
+            height: 170px;
+        }
+}
+
+     
     </style>
 </head>
 <body>
     
     <div class="chat-container">
-    <div class="chat-box">
-            <div class="chat-content">
-                <!-- User and AI messages will be hidden -->
-            </div>
-        </div>
-        <h3 style="color: rgb(0, 234, 255); display: flex; justify-content: center;">Press Space key to speak</h3>
+  
+        <h3 id="firsthe" style="color: rgb(0, 234, 255); display: flex; justify-content: center;">Press shift key to speak</h3>
         <div class="avatar">
-            <img id="avatar-img" src="/WhatsAppVideo2025-01-10at9.29.03PM-ezgif.com-video-to-gif-converter.gif" alt="AI Avatar">
+            <img id="avatar-img" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhhH8Fy8MTPge0EQCU1LqX1X9dFM9-2vrs6v0EBVHKlyyOpTmY3BezscBcGbAAcTxamK4fBp3uTLQzk10K4u5eeA5ZIgnoHviNkfRHX64jI2-HHlsl9d4JG_rr8ksQdaDZVc0kXZYPdvqpsIGCN_v-AelJcZIBlmKSxZLS_-MTghsavn2yi5Lx4IZD2tQA/s800/WhatsAppVideo2025-01-10at9.29.03PM-ezgif.com-video-to-gif-converter.gif" alt="AI Avatar">
         </div>
       
         <div class="chat-box">
@@ -122,8 +190,8 @@
 
         <div class="input-container">
             <input type="text" id="prompt" placeholder="Type a message...">
-            <button style="background-color: blue;" id="submit">Send</button>
-            <button id="voice-input"><svg style="height: 30px; width:30px; " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path fill="#00ffee" d="M192 0C139 0 96 43 96 96l0 160c0 53 43 96 96 96s96-43 96-96l0-160c0-53-43-96-96-96zM64 216c0-13.3-10.7-24-24-24s-24 10.7-24 24l0 40c0 89.1 66.2 162.7 152 174.4l0 33.6-48 0c-13.3 0-24 10.7-24 24s10.7 24 24 24l72 0 72 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-48 0 0-33.6c85.8-11.7 152-85.3 152-174.4l0-40c0-13.3-10.7-24-24-24s-24 10.7-24 24l0 40c0 70.7-57.3 128-128 128s-128-57.3-128-128l0-40z"/></svg></button>
+            <button  id="submit"><svg style="height: 18px; width:18px; " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path fill="#FFD43B" d="M498.1 5.6c10.1 7 15.4 19.1 13.5 31.2l-64 416c-1.5 9.7-7.4 18.2-16 23s-18.9 5.4-28 1.6L284 427.7l-68.5 74.1c-8.9 9.7-22.9 12.9-35.2 8.1S160 493.2 160 480l0-83.6c0-4 1.5-7.8 4.2-10.8L331.8 202.8c5.8-6.3 5.6-16-.4-22s-15.7-6.4-22-.7L106 360.8 17.7 316.6C7.1 311.3 .3 300.7 0 288.9s5.9-22.8 16.1-28.7l448-256c10.7-6.1 23.9-5.5 34 1.4z"/></svg></button>
+            <button id="voice-input"><svg style="height: 18px; width:18px; " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path fill="#FFD43B" d="M192 0C139 0 96 43 96 96l0 160c0 53 43 96 96 96s96-43 96-96l0-160c0-53-43-96-96-96zM64 216c0-13.3-10.7-24-24-24s-24 10.7-24 24l0 40c0 89.1 66.2 162.7 152 174.4l0 33.6-48 0c-13.3 0-24 10.7-24 24s10.7 24 24 24l72 0 72 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-48 0 0-33.6c85.8-11.7 152-85.3 152-174.4l0-40c0-13.3-10.7-24-24-24s-24 10.7-24 24l0 40c0 70.7-57.3 128-128 128s-128-57.3-128-128l0-40z"/></svg></button>
         </div>
     </div>
     
@@ -183,12 +251,12 @@
             // Stop any ongoing speech and reset avatar image
             if (currentUtterance && synth.speaking) {
                 synth.cancel();
-                avatarImg.src = "/WhatsAppVideo2025-01-10at9.29.03PM-ezgif.com-video-to-gif-converter.gif"; // Reset avatar
+                avatarImg.src = "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhhH8Fy8MTPge0EQCU1LqX1X9dFM9-2vrs6v0EBVHKlyyOpTmY3BezscBcGbAAcTxamK4fBp3uTLQzk10K4u5eeA5ZIgnoHviNkfRHX64jI2-HHlsl9d4JG_rr8ksQdaDZVc0kXZYPdvqpsIGCN_v-AelJcZIBlmKSxZLS_-MTghsavn2yi5Lx4IZD2tQA/s800/WhatsAppVideo2025-01-10at9.29.03PM-ezgif.com-video-to-gif-converter.gif"; // Reset avatar
             }
 
             // Change avatar to loading image after 2 seconds
             setTimeout(() => {
-                avatarImg.src = "/aivideo.gif";
+                avatarImg.src = "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhlLmZw1azadUdBSMQjrIZPx5uONLyewoDxZh5EYn6aL0qmnIzzIJpuazFzbjDysUYwxURX8mp_7cGFh4g9q_3IAT16v0eYlW9YhTpXULByDkLXAYLB-hfMXghliccmRmFG02o4kTt3eZEpo8CHUrPr0p1IIYCrhe7QEdOKaqEzWk7WtQMgaAHt0MYlF0A/s2566/aivideo.gif";
             }, 2000);
 
             generateResponse();
@@ -241,7 +309,7 @@
                         synth.speak(utterance);
                         currentUtterance = utterance; // Keep track of the ongoing utterance
                     } else {
-                        avatarImg.src = "/WhatsAppVideo2025-01-10at9.29.03PM-ezgif.com-video-to-gif-converter.gif"; // Reset avatar
+                        avatarImg.src = "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhhH8Fy8MTPge0EQCU1LqX1X9dFM9-2vrs6v0EBVHKlyyOpTmY3BezscBcGbAAcTxamK4fBp3uTLQzk10K4u5eeA5ZIgnoHviNkfRHX64jI2-HHlsl9d4JG_rr8ksQdaDZVc0kXZYPdvqpsIGCN_v-AelJcZIBlmKSxZLS_-MTghsavn2yi5Lx4IZD2tQA/s800/WhatsAppVideo2025-01-10at9.29.03PM-ezgif.com-video-to-gif-converter.gif"; // Reset avatar
                     }
                 }
 
@@ -319,36 +387,38 @@
                 handleChatResponse(prompt.value);
             }
         });
+        
     </script>
 
 <script>
-    let isRecording = false; // Track if recording is in progress
+   let isRecording = false; // Track if recording is in progress
 
-    if (recognition) {
-        document.addEventListener("keydown", (e) => {
-            if (e.code === "Space" && !isRecording) {
-                e.preventDefault();
-                isRecording = true;
-                recognition.start();
-            }
-        });
+if (recognition) {
+    document.addEventListener("keydown", (e) => {
+        if ((e.code === "ShiftLeft" || e.code === "ShiftRight") && !isRecording) {
+            e.preventDefault();
+            isRecording = true;
+            recognition.start();
+        }
+    });
 
-        document.addEventListener("keyup", (e) => {
-            if (e.code === "Space" && isRecording) {
-                e.preventDefault();
-                isRecording = false;
-                recognition.stop();
-            }
-        });
+    document.addEventListener("keyup", (e) => {
+        if ((e.code === "ShiftLeft" || e.code === "ShiftRight") && isRecording) {
+            e.preventDefault();
+            isRecording = false;
+            recognition.stop();
+        }
+    });
 
-        recognition.onstart = () => {
-            console.log("Voice recognition started");
-        };
+    recognition.onstart = () => {
+        console.log("Voice recognition started");
+    };
 
-        recognition.onend = () => {
-            console.log("Voice recognition ended");
-        };
-    }
+    recognition.onend = () => {
+        console.log("Voice recognition ended");
+    };
+}
+
 </script>
 
 </body>
