@@ -266,13 +266,26 @@ box-shadow: rgba(255, 230, 0, 0.961) 0px 2px 5px -1px, rgb(255, 251, 0) 0px 1px 
         function filterAsteriskWords(text) {
             return text.split(" ").map(word => word.includes("*") ? "ध्यान से सुन" : word).join(" ");
         }
-        function filterAsteriskWords(text) {
-            return text.split(" ").map(word => word.includes("sex") ? "मादरचोद इंग्लिश सीखने आया है या बकचोदी करने आया है तू। सुधर जाओ एस्मे ही भलाई है । साले Motherfucker" : word).join(" ");
-        }
+
 
         function filterAsteriskWords(text) {
-            return text.split(" ").map(word => word.includes("Google") ? "Free4talk Company" : word).join(" ");
+    const mappings = {
+        "*": " ",
+        "Google": "Free4talk company",
+        "Sex": "मादरचोद इंग्लिश सीखने आया है या बकचोदी करने आया है तू। सुधर जाओ एस्मे ही भलाई है । साले Motherfucker",
+        "sex": "मादरचोद इंग्लिश सीखने आया है या बकचोदी करने आया है तू। सुधर जाओ एस्मे ही भलाई है । साले Motherfucker",
+        "sexually": "बकचोदी करने आया है"
+    };
+
+    return text.split(" ").map(word => {
+        for (const [key, value] of Object.entries(mappings)) {
+            if (word.includes(key)) {
+                return value;
+            }
         }
+        return word;
+    }).join(" ");
+}
 
 
         function voiceControl(responseText) {
