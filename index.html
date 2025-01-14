@@ -66,6 +66,9 @@
             align-items: center;
             justify-content: space-between;
             margin-top: 20px;
+            position: fixed;
+            bottom: 20px;
+            gap: 20px;
         }
 
         #prompt {
@@ -170,6 +173,8 @@ box-shadow: rgba(255, 230, 0, 0.961) 0px 2px 5px -1px, rgb(255, 251, 0) 0px 1px 
         }
 }
 
+
+
      
     </style>
 </head>
@@ -179,7 +184,7 @@ box-shadow: rgba(255, 230, 0, 0.961) 0px 2px 5px -1px, rgb(255, 251, 0) 0px 1px 
   
         <h3 id="firsthe" style="color: rgb(0, 234, 255); display: flex; justify-content: center;">Press shift key to speak</h3>
         <div class="avatar">
-            <img id="avatar-img" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhhH8Fy8MTPge0EQCU1LqX1X9dFM9-2vrs6v0EBVHKlyyOpTmY3BezscBcGbAAcTxamK4fBp3uTLQzk10K4u5eeA5ZIgnoHviNkfRHX64jI2-HHlsl9d4JG_rr8ksQdaDZVc0kXZYPdvqpsIGCN_v-AelJcZIBlmKSxZLS_-MTghsavn2yi5Lx4IZD2tQA/s800/WhatsAppVideo2025-01-10at9.29.03PM-ezgif.com-video-to-gif-converter.gif" alt="AI Avatar">
+            <img id="avatar-img" src="https://i.ibb.co/Z6yQ422/Whats-App-Video2025-01-10at9-29-03-PM-ezgif-com-video-to-gif-converter.gif" alt="AI Avatar">
         </div>
       
         <div class="chat-box">
@@ -251,13 +256,13 @@ box-shadow: rgba(255, 230, 0, 0.961) 0px 2px 5px -1px, rgb(255, 251, 0) 0px 1px 
             // Stop any ongoing speech and reset avatar image
             if (currentUtterance && synth.speaking) {
                 synth.cancel();
-                avatarImg.src = "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhhH8Fy8MTPge0EQCU1LqX1X9dFM9-2vrs6v0EBVHKlyyOpTmY3BezscBcGbAAcTxamK4fBp3uTLQzk10K4u5eeA5ZIgnoHviNkfRHX64jI2-HHlsl9d4JG_rr8ksQdaDZVc0kXZYPdvqpsIGCN_v-AelJcZIBlmKSxZLS_-MTghsavn2yi5Lx4IZD2tQA/s800/WhatsAppVideo2025-01-10at9.29.03PM-ezgif.com-video-to-gif-converter.gif"; // Reset avatar
+                avatarImg.src = "https://i.ibb.co/Z6yQ422/Whats-App-Video2025-01-10at9-29-03-PM-ezgif-com-video-to-gif-converter.gif"; // Reset avatar
             }
 
             // Change avatar to loading image after 2 seconds
             setTimeout(() => {
                 avatarImg.src = "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhlLmZw1azadUdBSMQjrIZPx5uONLyewoDxZh5EYn6aL0qmnIzzIJpuazFzbjDysUYwxURX8mp_7cGFh4g9q_3IAT16v0eYlW9YhTpXULByDkLXAYLB-hfMXghliccmRmFG02o4kTt3eZEpo8CHUrPr0p1IIYCrhe7QEdOKaqEzWk7WtQMgaAHt0MYlF0A/s2566/aivideo.gif";
-            }, 2000);
+            }, 600);
 
             generateResponse();
         }
@@ -303,9 +308,15 @@ box-shadow: rgba(255, 230, 0, 0.961) 0px 2px 5px -1px, rgb(255, 251, 0) 0px 1px 
 
             function loadVoices() {
                 voices = synth.getVoices();
-                const femaleHindiVoice = voices.find(voice => voice.name === "Google हिंदी" || voice.name.toLowerCase().includes("female"));
+                const femaleHindiVoice = voices.find(voice => 
+    voice.lang === "hi-IN" || 
+    voice.name.toLowerCase().includes("hindi")
+);
+
                 const femaleEnglishVoice = voices.find(voice => voice.name === "Google US English" || voice.name.toLowerCase().includes("female"));
 
+              
+              
                 function speakNextChunk() {
                     if (currentChunkIndex < chunks.length) {
                         let utterance = new SpeechSynthesisUtterance(chunks[currentChunkIndex]);
@@ -322,19 +333,27 @@ box-shadow: rgba(255, 230, 0, 0.961) 0px 2px 5px -1px, rgb(255, 251, 0) 0px 1px 
                         synth.speak(utterance);
                         currentUtterance = utterance; // Keep track of the ongoing utterance
                     } else {
-                        avatarImg.src = "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhhH8Fy8MTPge0EQCU1LqX1X9dFM9-2vrs6v0EBVHKlyyOpTmY3BezscBcGbAAcTxamK4fBp3uTLQzk10K4u5eeA5ZIgnoHviNkfRHX64jI2-HHlsl9d4JG_rr8ksQdaDZVc0kXZYPdvqpsIGCN_v-AelJcZIBlmKSxZLS_-MTghsavn2yi5Lx4IZD2tQA/s800/WhatsAppVideo2025-01-10at9.29.03PM-ezgif.com-video-to-gif-converter.gif"; // Reset avatar
+                        avatarImg.src = "https://i.ibb.co/Z6yQ422/Whats-App-Video2025-01-10at9-29-03-PM-ezgif-com-video-to-gif-converter.gif"; // Reset avatar
                     }
                 }
+
+                
 
                 speakNextChunk();
             }
 
-            if (synth.getVoices().length) {
-                loadVoices();
-            } else {
-                synth.onvoiceschanged = loadVoices;
-            }
+           if (synth.getVoices().length) {
+    loadVoices();
+} else {
+    synth.onvoiceschanged = loadVoices;
+    setTimeout(loadVoices, 0); 
+}
+
         }
+
+
+
+
 
         function splitTextIntoChunks(text, maxLength) {
             const regex = new RegExp(`.{1,${maxLength}}(\s|$)`, 'g');
