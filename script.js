@@ -53,27 +53,41 @@ function handlechatResponse(userMessage) {
     // Stop any ongoing speech and reset avatar image
     if (currentUtterance && synth.speaking) {
         synth.cancel();
-        avatarImg.src = "/WhatsAppVideo2025-01-10at9.29.03PM-ezgif.com-video-to-gif-converter.gif"; // Reset avatar
+        avatarImg.src = "https://i.ibb.co/Z6yQ422/Whats-App-Video2025-01-10at9-29-03-PM-ezgif-com-video-to-gif-converter.gif"; // Reset avatar
     }
 
     // Change avatar to loading image after 2 seconds
     setTimeout(() => {
-        avatarImg.src = "/aivideo.gif";
+        avatarImg.src = "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhlLmZw1azadUdBSMQjrIZPx5uONLyewoDxZh5EYn6aL0qmnIzzIJpuazFzbjDysUYwxURX8mp_7cGFh4g9q_3IAT16v0eYlW9YhTpXULByDkLXAYLB-hfMXghliccmRmFG02o4kTt3eZEpo8CHUrPr0p1IIYCrhe7QEdOKaqEzWk7WtQMgaAHt0MYlF0A/s2566/aivideo.gif";
     }, 2000);
-
-    generateResponse();
+   generateResponse();
 }
 
+
+// avatarImg.src = "https://i.ibb.co/w6FdJsR/aivideo.gif";
 
 function filterAsteriskWords(text) {
     return text.split(" ").map(word => word.includes("*") ? "ध्यान से सुन" : word).join(" ");
 }
-function filterAsteriskWords(text) {
-    return text.split(" ").map(word => word.includes("sex") ? "मादरचोद इंग्लिश सीखने आया है या बकचोदी करने आया है तू। सुधर जाओ एस्मे ही भलाई है । साले Motherfucker" : word).join(" ");
-}
+
 
 function filterAsteriskWords(text) {
-    return text.split(" ").map(word => word.includes("Google") ? "Free4talk Company" : word).join(" ");
+const mappings = {
+"*": " ",
+"Google": "Free4talk company",
+"Sex": "मादरचोद इंग्लिश सीखने आया है या बकचोदी करने आया है तू। सुधर जाओ एस्मे ही भलाई है । साले Motherfucker",
+"sex": "मादरचोद इंग्लिश सीखने आया है या बकचोदी करने आया है तू। सुधर जाओ एस्मे ही भलाई है । साले Motherfucker",
+"sexually": "बकचोदी करने आया है"
+};
+
+return text.split(" ").map(word => {
+for (const [key, value] of Object.entries(mappings)) {
+    if (word.includes(key)) {
+        return value;
+    }
+}
+return word;
+}).join(" ");
 }
 
 
@@ -92,9 +106,15 @@ function voiceControl(responseText) {
 
     function loadVoices() {
         voices = synth.getVoices();
-        const femaleHindiVoice = voices.find(voice => voice.name === "Google हिंदी" || voice.name.toLowerCase().includes("female"));
+        const femaleHindiVoice = voices.find(voice => 
+voice.lang === "hi-IN" || 
+voice.name.toLowerCase().includes("hindi")
+);
+
         const femaleEnglishVoice = voices.find(voice => voice.name === "Google US English" || voice.name.toLowerCase().includes("female"));
 
+      
+      
         function speakNextChunk() {
             if (currentChunkIndex < chunks.length) {
                 let utterance = new SpeechSynthesisUtterance(chunks[currentChunkIndex]);
@@ -111,19 +131,27 @@ function voiceControl(responseText) {
                 synth.speak(utterance);
                 currentUtterance = utterance; // Keep track of the ongoing utterance
             } else {
-                avatarImg.src = "/WhatsAppVideo2025-01-10at9.29.03PM-ezgif.com-video-to-gif-converter.gif"; // Reset avatar
+                avatarImg.src = "https://i.ibb.co/Z6yQ422/Whats-App-Video2025-01-10at9-29-03-PM-ezgif-com-video-to-gif-converter.gif"; // Reset avatar
             }
         }
+
+        
 
         speakNextChunk();
     }
 
-    if (synth.getVoices().length) {
-        loadVoices();
-    } else {
-        synth.onvoiceschanged = loadVoices;
-    }
+   if (synth.getVoices().length) {
+loadVoices();
+} else {
+synth.onvoiceschanged = loadVoices;
+setTimeout(loadVoices, 0); 
 }
+
+}
+
+
+
+
 
 function splitTextIntoChunks(text, maxLength) {
     const regex = new RegExp(`.{1,${maxLength}}(\s|$)`, 'g');
