@@ -3,175 +3,203 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple AI Chatbot with Voice</title>
+    <title>Free4Talk AI - Chat Face to Face with AI Robot</title>
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    <meta name="description" content="Chat face-to-face with AI robots using advanced speaking features on Free4Talk. Experience realistic AI avatars with human-like conversations.">
+    <meta name="keywords" content="AI chat with Voice, AI speaking robot, AI avatar, free chat, face-to-face AI conversation, Free4Talk">
+    <meta name="author" content="Narsi Jangid">
+    <meta name="robots" content="index, follow">
+    <link rel="icon" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi8CjRvMzz0DSdbV3N0nqzaLe1Xkn_NzdhgW-zrh6je-simF9vZzIhbd5_t8LJPkQ_rNbVjSZGcZ8Glly0E7fDYjx5e6gCEVUsUaqjnXJdOw0NblWPxINxKEd-RgIBZArRMXuTF_gkroP_kEEsfS6a-E5XEsEV4wfw3Mk0cnoG1Prx0zw26_OlPrXiWMSw/s500/b14989f1-e341-4850-bcf1-35c975c514ac.png" type="image/png">
 
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #000000;
-        }
 
-        .chat-container {
-            width: 100%;
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #000000;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(255, 0, 0, 0.1);
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-        }
+<meta property="og:title" content="Free4Talk AI - Chat Face to Face with AI Robot">
+<meta property="og:description" content="Experience real-time conversations with AI avatars that talk and respond like humans. Join now for free!">
+<meta property="og:image" content="https://free4talk.xyz/assets/og-image.jpg">
+<meta property="og:url" content="https://free4talk.xyz">
+<meta property="og:type" content="website">
 
-        .chat-box {
-            flex-grow: 1;
-            overflow-y: auto;
-            padding: 10px;
-            margin-top: 0%;
-          margin-top: 30px;
-        }
 
-        .chat-content {
-            display: flex;
-            flex-direction: column-reverse;
-       
-        }
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Free4Talk AI - Chat Face to Face with AI Robot">
+<meta name="twitter:description" content="Experience real-time conversations with AI avatars that talk and respond like humans. Join now for free!">
+<meta name="twitter:image" content="https://free4talk.xyz/assets/og-image.jpg">
+<link rel="stylesheet" href="styles.css">
 
-        .user-chat-box, .ai-chat-box {
-            display: none; /* Hide chat messages */
-        }
+<style>
+    * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-        .avatar {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 50%;
-        }
+body {
+    font-family: Arial, sans-serif;
+    background: rgb(2,0,36);
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,212,255,1) 82%);
+}
 
-        .avatar img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 10px;
-        }
+.chat-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background: rgb(0,0,0);
+    background: rgb(2,0,36);
+    background: linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(0,212,255,1) 82%);  border-radius: 10px;
+  opacity: 90%;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
 
-        .input-container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-top: 20px;
-        }
+.chat-box {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 10px;
+    margin-top: 0%;
+  margin-top: 30px;
+}
 
-        #prompt {
-            width: 70%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
+.chat-content {
+    display: flex;
+    flex-direction: column-reverse;
 
-        button {
-            padding: 10px 15px;
-            border: none;
-            background-color: #3498db;
-            color: white;
-            font-size: 14px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+}
 
-        button:hover {
-            background-color: #2980b9;
-        }
+.user-chat-box, .ai-chat-box {
+    display: none; /* Hide chat messages */
+}
 
-        .avatar img {
-            box-shadow: rgba(0, 225, 255, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
-        }
+.avatar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50%;
+}
 
-        #voice-input{
-            background-color: rgb(7, 7, 7);
-border-radius: 10px;
-box-shadow: rgba(255, 230, 0, 0.961) 0px 2px 5px -1px, rgb(255, 251, 0) 0px 1px 3px -1px;
+.avatar img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
 
-        }
+.input-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+    position: fixed;
+    bottom: 20px;
+    gap: 20px;
+}
 
-        #prompt {
+#prompt {
     width: 70%;
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
-    white-space: pre-wrap; /* This ensures spaces are displayed correctly */
-    word-wrap: break-word; /* Ensures long words break appropriately */
+}
+
+button {
+    padding: 10px 15px;
+    border: none;
+    background-color: #3498db;
+    color: white;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+
+.avatar img {
+    box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
+}
+
+#voice-input{
+    background-color: rgb(7, 7, 7);
+border-radius: 10px;
+box-shadow: rgba(255, 230, 0, 0.961) 0px 2px 5px -1px, rgb(255, 251, 0) 0px 1px 3px -1px;
+
+}
+
+#prompt {
+width: 70%;
+padding: 10px;
+border: 1px solid #ddd;
+border-radius: 5px;
+white-space: pre-wrap; /* This ensures spaces are displayed correctly */
+word-wrap: break-word; /* Ensures long words break appropriately */
 }
 
 
-        @media only screen and (min-width: 600px) {
-            .avatar img {
-                height: 410px;
-                box-shadow: rgba(0, 225, 255, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
-            }
-            #submit{
+@media only screen and (min-width: 600px) {
+    .avatar img {
+        height: 410px;
+     box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+    
+    }
+    #submit{
 background-color: rgb(7, 7, 7);
 border-radius: 10px;
 box-shadow: rgba(255, 230, 0, 0.961) 0px 2px 5px -1px, rgb(255, 251, 0) 0px 1px 3px -1px;
 margin-top: 80px;
-        }
-        #voice-input{
-            background-color: rgb(7, 7, 7);
+}
+#voice-input{
+    background-color: rgb(7, 7, 7);
 border-radius: 10px;
 box-shadow: rgba(255, 230, 0, 0.961) 0px 2px 5px -1px, rgb(255, 251, 0) 0px 1px 3px -1px;
 margin-top: 80px;
-        }
+}
 
-        #prompt{
-            height: 39px;
-            color: rgb(0, 0, 0);
-            border: none;
-            width: 630px;
-           margin-top: 80px;
-          
-        }
-          
-        }
+#prompt{
+    height: 39px;
+    color: rgb(0, 0, 0);
+    border: none;
+    width: 630px;
+   margin-top: 80px;
+  
+}
+  
+}
 
 
-        
+
 
 @media only screen and (max-width:600px) {
-   
-        #submit{
+
+#submit{
 background-color: rgb(7, 7, 7);
 border-radius: 10px;
 box-shadow: rgba(255, 230, 0, 0.961) 0px 2px 5px -1px, rgb(255, 251, 0) 0px 1px 3px -1px;
 margin: 8px;
-        }
-        #voice-input{
-            background-color: rgb(7, 7, 7);
+}
+#voice-input{
+    background-color: rgb(7, 7, 7);
 border-radius: 10px;
 box-shadow: rgba(255, 230, 0, 0.961) 0px 2px 5px -1px, rgb(255, 251, 0) 0px 1px 3px -1px;
 
-        }
-
-        #prompt{
-            height: 37px;
-            color: rgb(0, 0, 0);
-            border: none;
-          
-        }
-      
-
-        .chat-box{
-            height: 170px;
-        }
 }
 
-     
-    </style>
+#prompt{
+    height: 37px;
+    color: rgb(0, 0, 0);
+    border: none;
+  
+}
+
+
+.chat-box{
+    height: 170px;
+}
+}
+
+
+
+</style>
+  
 </head>
 <body>
     
@@ -179,12 +207,12 @@ box-shadow: rgba(255, 230, 0, 0.961) 0px 2px 5px -1px, rgb(255, 251, 0) 0px 1px 
   
         <h3 id="firsthe" style="color: rgb(0, 234, 255); display: flex; justify-content: center;">Press shift key to speak</h3>
         <div class="avatar">
-            <img id="avatar-img" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhhH8Fy8MTPge0EQCU1LqX1X9dFM9-2vrs6v0EBVHKlyyOpTmY3BezscBcGbAAcTxamK4fBp3uTLQzk10K4u5eeA5ZIgnoHviNkfRHX64jI2-HHlsl9d4JG_rr8ksQdaDZVc0kXZYPdvqpsIGCN_v-AelJcZIBlmKSxZLS_-MTghsavn2yi5Lx4IZD2tQA/s800/WhatsAppVideo2025-01-10at9.29.03PM-ezgif.com-video-to-gif-converter.gif" alt="AI Avatar">
+            <img id="avatar-img" src="https://i.ibb.co/Z6yQ422/Whats-App-Video2025-01-10at9-29-03-PM-ezgif-com-video-to-gif-converter.gif" alt="AI Avatar">
         </div>
       
         <div class="chat-box">
-            <div style="color: rgb(0, 222, 242);" class="chat-content" id="response-container">
-                <!-- AI response will appear here -->
+            <div style="color: rgb(255, 255, 255); font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-weight: bold;" class="chat-content" id="response-container">
+            
             </div>
         </div>
 
@@ -195,244 +223,248 @@ box-shadow: rgba(255, 230, 0, 0.961) 0px 2px 5px -1px, rgb(255, 251, 0) 0px 1px 
         </div>
     </div>
     
-    <script>
-        let prompt = document.querySelector("#prompt");
-        let submitbtn = document.querySelector("#submit");
-        let voiceInputBtn = document.querySelector("#voice-input");
-        let avatarImg = document.querySelector("#avatar-img");
 
-        const Api_Url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyDhDhiKFkaYAp-o0lGL4e4uJSYIJSh6paY"; // Replace with your API URL
 
-        let user = {
-            message: null
-        };
-
-        let synth = window.speechSynthesis;
-        let currentUtterance = null;
-        let recognition = null;
-        if (window.SpeechRecognition || window.webkitSpeechRecognition) {
-            recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-            recognition.lang = 'en-US';
-            recognition.continuous = false;
-            recognition.interimResults = false;
-
-            recognition.onresult = (event) => {
-                let transcript = event.results[0][0].transcript;
-                handlechatResponse(transcript);
-            };
+    <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "Chatbot",
+          "name": "Free4Talk AI",
+          "description": "A free platform to chat face-to-face with AI robots using advanced speaking features.",
+          "url": "https://free4talk.xyz",
+          "applicationCategory": "AI Communication",
+          "creator": {
+            "@type": "Organization",
+            "name": "Dazzlone",
+            "url": "https://dazzlone.com"
+          }
         }
+        </script>
+        <script src="script.js"></script>
+        <script src="spacekey.js"></script>
 
-        async function generateResponse() {
-            let RequestOption = {
-                method: "POST",
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    "contents": [
-                        { "parts": [{ text: user.message }] }
-                    ]
-                })
-            };
+        <script>
+            let prompt = document.querySelector("#prompt");
+let submitbtn = document.querySelector("#submit");
+let voiceInputBtn = document.querySelector("#voice-input");
+let avatarImg = document.querySelector("#avatar-img");
 
-            try {
-                let response = await fetch(Api_Url, RequestOption);
-                let data = await response.json();
-                let apiResponse = data.candidates[0].content.parts[0].text.trim();
-                voiceControl(apiResponse); // Call voice function
-            } catch (error) {
-                console.log(error);
-                voiceControl("Sorry, something went wrong.");
-            }
-        }
+const Api_Url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyDhDhiKFkaYAp-o0lGL4e4uJSYIJSh6paY"; // Replace with your API URL
 
-        function handlechatResponse(userMessage) {
-            user.message = userMessage;
-            prompt.value = "";
+let user = {
+    message: null
+};
 
-            // Stop any ongoing speech and reset avatar image
-            if (currentUtterance && synth.speaking) {
-                synth.cancel();
-                avatarImg.src = "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhhH8Fy8MTPge0EQCU1LqX1X9dFM9-2vrs6v0EBVHKlyyOpTmY3BezscBcGbAAcTxamK4fBp3uTLQzk10K4u5eeA5ZIgnoHviNkfRHX64jI2-HHlsl9d4JG_rr8ksQdaDZVc0kXZYPdvqpsIGCN_v-AelJcZIBlmKSxZLS_-MTghsavn2yi5Lx4IZD2tQA/s800/WhatsAppVideo2025-01-10at9.29.03PM-ezgif.com-video-to-gif-converter.gif"; // Reset avatar
-            }
+let synth = window.speechSynthesis;
+let currentUtterance = null;
+let recognition = null;
+if (window.SpeechRecognition || window.webkitSpeechRecognition) {
+    recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+    recognition.lang = 'en-US';
+    recognition.continuous = false;
+    recognition.interimResults = false;
 
-            // Change avatar to loading image after 2 seconds
-            setTimeout(() => {
-                avatarImg.src = "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhlLmZw1azadUdBSMQjrIZPx5uONLyewoDxZh5EYn6aL0qmnIzzIJpuazFzbjDysUYwxURX8mp_7cGFh4g9q_3IAT16v0eYlW9YhTpXULByDkLXAYLB-hfMXghliccmRmFG02o4kTt3eZEpo8CHUrPr0p1IIYCrhe7QEdOKaqEzWk7WtQMgaAHt0MYlF0A/s2566/aivideo.gif";
-            }, 2000);
+    recognition.onresult = (event) => {
+        let transcript = event.results[0][0].transcript;
+        handlechatResponse(transcript);
+    };
+}
 
-            generateResponse();
-        }
-
-
-        function filterAsteriskWords(text) {
-            return text.split(" ").map(word => word.includes("*") ? "ध्यान से सुन" : word).join(" ");
-        }
-
-
-        function filterAsteriskWords(text) {
-    const mappings = {
-        "*": " ",
-        "Google": "Free4talk company",
-        "Sex": "मादरचोद इंग्लिश सीखने आया है या बकचोदी करने आया है तू। सुधर जाओ एस्मे ही भलाई है । साले Motherfucker",
-        "sex": "मादरचोद इंग्लिश सीखने आया है या बकचोदी करने आया है तू। सुधर जाओ एस्मे ही भलाई है । साले Motherfucker",
-        "sexually": "बकचोदी करने आया है"
+async function generateResponse() {
+    let RequestOption = {
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            "contents": [
+                { "parts": [{ text: user.message }] }
+            ]
+        })
     };
 
-    return text.split(" ").map(word => {
-        for (const [key, value] of Object.entries(mappings)) {
-            if (word.includes(key)) {
-                return value;
-            }
-        }
-        return word;
-    }).join(" ");
+    try {
+        let response = await fetch(Api_Url, RequestOption);
+        let data = await response.json();
+        let apiResponse = data.candidates[0].content.parts[0].text.trim();
+        voiceControl(apiResponse); // Call voice function
+    } catch (error) {
+        console.log(error);
+        voiceControl("Sorry, something went wrong.");
+    }
+}
+
+function handlechatResponse(userMessage) {
+    user.message = userMessage;
+    prompt.value = "";
+
+    // Stop any ongoing speech and reset avatar image
+    if (currentUtterance && synth.speaking) {
+        synth.cancel();
+        avatarImg.src = "https://i.ibb.co/Z6yQ422/Whats-App-Video2025-01-10at9-29-03-PM-ezgif-com-video-to-gif-converter.gif"; // Reset avatar
+    }
+
+    // Change avatar to loading image after 2 seconds
+    setTimeout(() => {
+        avatarImg.src = "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhlLmZw1azadUdBSMQjrIZPx5uONLyewoDxZh5EYn6aL0qmnIzzIJpuazFzbjDysUYwxURX8mp_7cGFh4g9q_3IAT16v0eYlW9YhTpXULByDkLXAYLB-hfMXghliccmRmFG02o4kTt3eZEpo8CHUrPr0p1IIYCrhe7QEdOKaqEzWk7WtQMgaAHt0MYlF0A/s2566/aivideo.gif";
+    }, 2000);
+   generateResponse();
 }
 
 
-        function voiceControl(responseText) {
-            responseText = filterAsteriskWords(responseText); // Filter out words with *
+// avatarImg.src = "https://i.ibb.co/w6FdJsR/aivideo.gif";
 
-            const maxChunkLength = 200;
-            const chunks = splitTextIntoChunks(responseText, maxChunkLength);
+function filterAsteriskWords(text) {
+    return text.split(" ").map(word => word.includes("*") ? "ध्यान से सुन" : word).join(" ");
+}
 
-            let currentChunkIndex = 0;
-            let voices = [];
 
-            // Update the response on the left side of the chat
-            let responseContainer = document.getElementById("response-container");
-            responseContainer.innerHTML = `<p>${responseText}</p>`;
+function filterAsteriskWords(text) {
+const mappings = {
+"*": " ",
+"Google": "Free4talk company",
+"Sex": "मादरचोद इंग्लिश सीखने आया है या बकचोदी करने आया है तू। सुधर जाओ एस्मे ही भलाई है । साले Motherfucker",
+"sex": "मादरचोद इंग्लिश सीखने आया है या बकचोदी करने आया है तू। सुधर जाओ एस्मे ही भलाई है । साले Motherfucker",
+"sexually": "बकचोदी करने आया है"
+};
 
-            function loadVoices() {
-                voices = synth.getVoices();
-                const femaleHindiVoice = voices.find(voice => voice.name === "Google हिंदी" || voice.name.toLowerCase().includes("female"));
-                const femaleEnglishVoice = voices.find(voice => voice.name === "Google US English" || voice.name.toLowerCase().includes("female"));
+return text.split(" ").map(word => {
+for (const [key, value] of Object.entries(mappings)) {
+    if (word.includes(key)) {
+        return value;
+    }
+}
+return word;
+}).join(" ");
+}
 
-                function speakNextChunk() {
-                    if (currentChunkIndex < chunks.length) {
-                        let utterance = new SpeechSynthesisUtterance(chunks[currentChunkIndex]);
-                        utterance.lang = "hi-IN";
-                        utterance.volume = 1;
-                        utterance.rate = 1;
-                        utterance.pitch = 1;
 
-                        utterance.onend = () => {
-                            currentChunkIndex++;
-                            speakNextChunk();
-                        };
+function voiceControl(responseText) {
+    responseText = filterAsteriskWords(responseText); // Filter out words with *
 
-                        synth.speak(utterance);
-                        currentUtterance = utterance; // Keep track of the ongoing utterance
-                    } else {
-                        avatarImg.src = "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhhH8Fy8MTPge0EQCU1LqX1X9dFM9-2vrs6v0EBVHKlyyOpTmY3BezscBcGbAAcTxamK4fBp3uTLQzk10K4u5eeA5ZIgnoHviNkfRHX64jI2-HHlsl9d4JG_rr8ksQdaDZVc0kXZYPdvqpsIGCN_v-AelJcZIBlmKSxZLS_-MTghsavn2yi5Lx4IZD2tQA/s800/WhatsAppVideo2025-01-10at9.29.03PM-ezgif.com-video-to-gif-converter.gif"; // Reset avatar
-                    }
-                }
+    const maxChunkLength = 200;
+    const chunks = splitTextIntoChunks(responseText, maxChunkLength);
 
-                speakNextChunk();
-            }
+    let currentChunkIndex = 0;
+    let voices = [];
 
-            if (synth.getVoices().length) {
-                loadVoices();
+    // Update the response on the left side of the chat
+    let responseContainer = document.getElementById("response-container");
+    responseContainer.innerHTML = `<p>${responseText}</p>`;
+
+    function loadVoices() {
+        voices = synth.getVoices();
+        const femaleHindiVoice = voices.find(voice => 
+voice.lang === "hi-IN" || 
+voice.name.toLowerCase().includes("hindi")
+);
+
+        const femaleEnglishVoice = voices.find(voice => voice.name === "Google US English" || voice.name.toLowerCase().includes("female"));
+
+      
+      
+        function speakNextChunk() {
+            if (currentChunkIndex < chunks.length) {
+                let utterance = new SpeechSynthesisUtterance(chunks[currentChunkIndex]);
+                utterance.lang = "hi-IN";
+                utterance.volume = 1;
+                utterance.rate = 1;
+                utterance.pitch = 1;
+
+                utterance.onend = () => {
+                    currentChunkIndex++;
+                    speakNextChunk();
+                };
+
+                synth.speak(utterance);
+                currentUtterance = utterance; // Keep track of the ongoing utterance
             } else {
-                synth.onvoiceschanged = loadVoices;
+                avatarImg.src = "https://i.ibb.co/Z6yQ422/Whats-App-Video2025-01-10at9-29-03-PM-ezgif-com-video-to-gif-converter.gif"; // Reset avatar
             }
         }
 
-        function splitTextIntoChunks(text, maxLength) {
-            const regex = new RegExp(`.{1,${maxLength}}(\s|$)`, 'g');
-            return text.match(regex) || [text];
-        }
-
-        prompt.addEventListener("keydown", (e) => {
-            if (e.key == "Enter") {
-                handlechatResponse(prompt.value);
-            }
-        });
-
-        submitbtn.addEventListener("click", () => {
-            handlechatResponse(prompt.value);
-        });
-
-        voiceInputBtn.addEventListener("mousedown", () => {
-            if (recognition) {
-                recognition.start();
-            }
-        });
-
-        voiceInputBtn.addEventListener("mouseup", () => {
-            if (recognition) {
-                recognition.stop();
-            }
-        });
-
-        voiceBtn.addEventListener("mouseup", () => {
-            if (recognition && isRecording) {
-                recognition.stop();
-            }
-        });
-
-        // Spacebar for voice input (PC)
-        document.addEventListener("keydown", (e) => {
-            if (e.code === "Space" && !isRecording) {
-                e.preventDefault();
-                if (recognition) {
-                    isRecording = true;
-                    recognition.start();
-                }
-            }
-        });
-
-        document.addEventListener("keyup", (e) => {
-            if (e.code === "Space" && isRecording) {
-                e.preventDefault();
-                if (recognition) {
-                    recognition.stop();
-                }
-            }
-        });
-
-        // Send button click
-        submitBtn.addEventListener("click", () => {
-            handleChatResponse(prompt.value);
-        });
-
-        // Enter key to send message
-        prompt.addEventListener("keydown", (e) => {
-            if (e.key === "Enter") {
-                handleChatResponse(prompt.value);
-            }
-        });
         
-    </script>
 
-<script>
-   let isRecording = false; // Track if recording is in progress
+        speakNextChunk();
+    }
 
-if (recognition) {
-    document.addEventListener("keydown", (e) => {
-        if ((e.code === "ShiftLeft" || e.code === "ShiftRight") && !isRecording) {
-            e.preventDefault();
+   if (synth.getVoices().length) {
+loadVoices();
+} else {
+synth.onvoiceschanged = loadVoices;
+setTimeout(loadVoices, 0); 
+}
+
+}
+
+
+
+
+
+function splitTextIntoChunks(text, maxLength) {
+    const regex = new RegExp(`.{1,${maxLength}}(\s|$)`, 'g');
+    return text.match(regex) || [text];
+}
+
+prompt.addEventListener("keydown", (e) => {
+    if (e.key == "Enter") {
+        handlechatResponse(prompt.value);
+    }
+});
+
+submitbtn.addEventListener("click", () => {
+    handlechatResponse(prompt.value);
+});
+
+voiceInputBtn.addEventListener("mousedown", () => {
+    if (recognition) {
+        recognition.start();
+    }
+});
+
+voiceInputBtn.addEventListener("mouseup", () => {
+    if (recognition) {
+        recognition.stop();
+    }
+});
+
+voiceBtn.addEventListener("mouseup", () => {
+    if (recognition && isRecording) {
+        recognition.stop();
+    }
+});
+
+// Spacebar for voice input (PC)
+document.addEventListener("keydown", (e) => {
+    if (e.code === "Space" && !isRecording) {
+        e.preventDefault();
+        if (recognition) {
             isRecording = true;
             recognition.start();
         }
-    });
+    }
+});
 
-    document.addEventListener("keyup", (e) => {
-        if ((e.code === "ShiftLeft" || e.code === "ShiftRight") && isRecording) {
-            e.preventDefault();
-            isRecording = false;
+document.addEventListener("keyup", (e) => {
+    if (e.code === "Space" && isRecording) {
+        e.preventDefault();
+        if (recognition) {
             recognition.stop();
         }
-    });
+    }
+});
 
-    recognition.onstart = () => {
-        console.log("Voice recognition started");
-    };
+// Send button click
+submitBtn.addEventListener("click", () => {
+    handleChatResponse(prompt.value);
+});
 
-    recognition.onend = () => {
-        console.log("Voice recognition ended");
-    };
-}
+// Enter key to send message
+prompt.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+        handleChatResponse(prompt.value);
+    }
+});
 
-</script>
+        </script>
 
 </body>
 </html>
