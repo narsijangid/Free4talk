@@ -3,7 +3,7 @@ let submitbtn = document.querySelector("#submit");
 let voiceInputBtn = document.querySelector("#voice-input");
 let avatarImg = document.querySelector("#avatar-img");
 
-const Api_Url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyDhDhiKFkaYAp-o0lGL4e4uJSYIJSh6paY"; // Replace with your API URL
+const Api_Url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyBIPqgV2uz9uepY-RmiGcUb50AYIWkk0ns"; // Replace with your API URL
 
 let user = {
     message: null
@@ -188,4 +188,5 @@ prompt.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
         handleChatResponse(prompt.value);
     }
+
 });
